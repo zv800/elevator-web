@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <link rel="stylesheet" href="back.css">
+
+    <meta charset="UTF-8">
+    <title>Elevator Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.sound.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+    <style type="text/css">
+        body {
+            width: 100%;
+            font-family: sans-serif;
+        }
+
+        .label, .hud-text {
+            font-size: 70%;
+            color: black;
+            margin-right: 1em;
+        }
+
+        .hud-text {
+            vertical-align: middle;
+        }
+        input, select {
+            font-size: 70%;
+        }
+        td {
+            vertical-align: top;
+        }
+        #paymentsChart {
+            height: 15px;
+        }
+        #nomodules {
+            display: none;
+        }
+        #controls {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+<div id="nomodules">
+    <p>This application uses “ES Modules”, which apparently are not supported or enabled in your browser.</p>
+    <a href="https://jakearchibald.com/2017/es-modules-in-browsers/">More information</a>
+</div>
+<script nomodule>
+    document.getElementById('nomodules').style.display = 'block';
+</script>
+<div class="container-fluid">
+<p><b>Elevator Simulator</b>
+    
+    <div class='row'>
+        <div class='col-3'>
+            <div id='controls'>
+                <table>
+                    <tr>
+                        <td><label for="score" class="label">Score</label></td>
+                        <td id="score"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="waiting" class="label">Waiting</label></td>
+                        <td id="waiting" class='hud-text'></td>
+                    </tr>
+                    <tr>
+                        <td><label for="riding" class="label">Riding</label></td>
+                        <td id="riding" class='hud-text'></td>
+                    </tr>
+                    <tr>
+                        <td><label for="served" class="label">Served</label></td>
+                        <td id="served" class='hud-text'></td>
+                    </tr>
+                    <tr>
+                        <td><label for="payments" class="label">Payments</label></td>
+                        <td id="payments" class='hud-text'></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="paymentsChart"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="costs" class="label">Costs</label></td>
+                        <td id="costs" class='hud-text'></td>
+                    </tr>
+                    <tr>
+                        <td><label for="profit" class="label">Profit</label></td>
+                        <td id="profit" class='hud-text'></td>
+                    </tr>
+                    <tr>
+                        <td><label for="numActiveCars" class="label">Active Cars</label></td>
+                        <td><input id="numActiveCars" type="range" min="0" max="8" step="1"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="elevSpeed" class="label">Car Speed</label></td>
+                        <td><input id="elevSpeed" type="range" min="1" max="10" step="1"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="projection" class="label">Projection</label></td>
+                        <td id="projectionParent"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="controlMode" class="label">Control Mode</label></td>
+                        <td id="controlModeParent"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="view" class="label">View</label></td>
+                        <td id="viewParent"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="passengerLoad" class="label">Load</label></td>
+                        <td id="passengerLoadParent"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="volume" class="label">Volume</label></td>
+                        <td><input id="volume" type="range" min="0" max="10" step="1"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="speakers" class="label">Speakers</label></td>
+                        <td id="speakersParent"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class='col' id='main'></div>
+    </div>
+</div>
+</body>
+</html>
